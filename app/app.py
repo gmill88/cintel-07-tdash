@@ -4,9 +4,9 @@ from faicons import icon_svg
 
 from shiny import reactive
 from shiny.express import input, render, ui
-import palmerpenguins 
+import palmerpenguins
+import importlib
 
-# load penguins data
 df = palmerpenguins.load_penguins()
 
 # Set page options
