@@ -6,6 +6,8 @@ from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins
 import importlib
+import plotly.express as px
+from shinywidgets import render_plotly
 
 df = palmerpenguins.load_penguins()
 
@@ -73,18 +75,18 @@ with ui.layout_column_wrap(fill=False):
         def bill_depth():
             return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
 
-# Create cards with scatterplot and data grid
+
 with ui.layout_columns():
     with ui.card(full_screen=True):
-        ui.card_header("Bill length and depth")
+        ui.card_header("Bill Length vs. Bill Depth")
 
-        @render.plot
-        def length_depth():
-            return sns.scatterplot(
-                data=filtered_df(),
+        @render_plotly
+        def length_depth_plotly():
+            return px.histogram(
+                data_frame=filtered_df(),
                 x="bill_length_mm",
                 y="bill_depth_mm",
-                hue="species",
+                color="species",
             )
 
     with ui.card(full_screen=True):
